@@ -1,12 +1,18 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\VariantController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
+use App\Models\Variant;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use PHPUnit\Framework\Attributes\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +45,15 @@ Route::prefix('admin')
         Route::get('/', [DashboardController::class, 'index'])
             ->name('dashboard');
 
+        Route::get('/product/{id}/variant', [VariantController::class, 'index'])
+            ->name('variant2');
+
+        Route::get('/product/{id}/variant/create', [VariantController::class, 'create'])->name('create_variant');
+
         Route::resource('product', ProductController::class);
+        Route::resource('variant', VariantController::class);
+        Route::resource('gallery', GalleryController::class);
+        Route::resource('transaction', TransactionController::class);
     });
 
 Auth::routes(['verify' => true]);

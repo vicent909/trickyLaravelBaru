@@ -7,10 +7,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Product</h1>
-        <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Product
-        </a>
+        <h1 class="h3 mb-0 text-gray-800">Transaksi</h1>
     </div>
 
     <div class="row">
@@ -20,9 +17,9 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Title</th>
-                            <th>About</th>
-                            <th>Price</th>
+                            <th>Produk</th>
+                            <th>Total</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,20 +27,17 @@
                         @forelse ($items as $item)
                             <tr>
                                 <th>{{ $item ->id }}</th>
-                                <th>{{ $item ->title }}</th>
-                                <th>{{ $item ->about }}</th>
-                                <th>{{ $item ->price }}</th>
+                                <th>{{ $item ->product->title }}</th>
+                                <th>Rp. {{ $item ->transaction_total }}</th>
+                                <th>{{ $item ->transaction_status }}</th>
                                 <td>
-                                    {{-- <a href="{{ route('variant.index', $item->id ) }}" class="btn btn-primary">
+                                    <a href="{{ route('transaction.show', $item->id ) }}" class="btn btn-primary">
                                         <i class="fa fa-eye"></i>
-                                    </a> --}}
-                                    <a href="{{ route('variant2', $item->id) }}" class="btn btn-primary">
-                                        <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="{{ route('product.edit', $item->id ) }}" class="btn btn-info">
+                                    <a href="{{ route('transaction.edit', $item->id ) }}" class="btn btn-info">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
-                                    <form action="{{ route('product.destroy', $item->id ) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('transaction.destroy', $item->id ) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger">

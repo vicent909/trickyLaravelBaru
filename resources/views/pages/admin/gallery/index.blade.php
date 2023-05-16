@@ -7,9 +7,9 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Product</h1>
-        <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Product
+        <h1 class="h3 mb-0 text-gray-800">gallery</h1>
+        <a href="{{ route('gallery.create') }}" class="btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah gallery
         </a>
     </div>
 
@@ -21,29 +21,23 @@
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>About</th>
-                            <th>Price</th>
+                            <th>Gambar</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($items as $item)
                             <tr>
-                                <th>{{ $item ->id }}</th>
-                                <th>{{ $item ->title }}</th>
-                                <th>{{ $item ->about }}</th>
-                                <th>{{ $item ->price }}</th>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->product_image->title }}</td>
                                 <td>
-                                    {{-- <a href="{{ route('variant.index', $item->id ) }}" class="btn btn-primary">
-                                        <i class="fa fa-eye"></i>
-                                    </a> --}}
-                                    <a href="{{ route('variant2', $item->id) }}" class="btn btn-primary">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('product.edit', $item->id ) }}" class="btn btn-info">
+                                    <img src="{{ Storage::url($item->image) }}" style="width: 150px" class="img-thumbnail" />
+                                </td>
+                                <td>
+                                    <a href="{{ route('gallery.edit', $item->id ) }}" class="btn btn-info">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
-                                    <form action="{{ route('product.destroy', $item->id ) }}" method="POST" class="d-inline">
+                                    <form action="{{ route('gallery.destroy', $item->id ) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-danger">
