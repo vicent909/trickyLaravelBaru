@@ -28,6 +28,7 @@
                     <label for="products_id" >Product</label>
                     <input type="text" class="form-control" name="products_id" placeholder="Product Id" value="{{ $item->id }}">
                 </div>
+
                 <div class="form-group">
                     <label for="sizes_id">Size</label>
                     <select name="sizes_id" required class="form-control">
@@ -39,6 +40,7 @@
                         @endforeach
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="colors_id">Color</label>
                     <select name="colors_id" required class="form-control">
@@ -50,14 +52,17 @@
                         @endforeach
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="price" >Quantity</label>
                     <input type="number" class="form-control" name="quantity" placeholder="Quantity" value="{{ old('quantity') }}">
                 </div>
+
                 <div class="form-group">
                     <label for="price" >Price</label>
                     <input type="number" class="form-control" name="price" placeholder="Price" value="{{ old('price') }}">
                 </div>
+                
                 <button type="submit" class="btn btn-primary btn-block">
                     Simpan
                 </button>

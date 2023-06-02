@@ -24,14 +24,11 @@
                             Produk
                         </a>
                     </li>
-                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="navbardrop" data-toggle="dropdown">Service</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Link</a>
-                            <a href="#" class="dropdown-item">Link</a>
-                            <a href="#" class="dropdown-item">Link</a>
-                        </div>  
-                     </li>
+                    <li class="nav-item mx-md-2">
+                        <a href="{{ route('checkout') }}" class="nav-link">
+                            Keranjang
+                        </a>
+                    </li>
                     <li class="nav-item mx-md-2">
                         <a href="#" class="nav-link">
                             Testimonial

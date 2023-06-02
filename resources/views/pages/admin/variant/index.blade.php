@@ -6,6 +6,11 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
+    <div class="">
+        <a href="{{ route('product.index') }}" class="btn btn-sm btn-primary shadow-sm mb-2">
+            <i class="fas fa-angle-left text-white-50"></i> Kembali 
+        </a>
+    </div>
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Variant : {{ $pro->title }}</h1>
         <a href="{{ route('create_variant', $pro->id) }}" class="btn btn-sm btn-primary shadow-sm">

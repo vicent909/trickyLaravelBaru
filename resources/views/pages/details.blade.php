@@ -1,6 +1,35 @@
 @extends('layouts.app')
 @section('title', 'Detail Produk')
 
+<style>
+    .radio-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .radio-button input[type="radio"] {
+    display: none;
+    }
+
+    .radio-button label {
+    display: inline-block;
+    padding: 8px;
+    background-color: #eaeaea;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    }
+
+    .radio-button input[type="radio"]:checked + label {
+    background-color: #4286f4;
+    color: #fff;
+    }
+</style>
+
+
+
 @section('content')
 <main>
     <section class="section-details-header"></section>
@@ -24,45 +53,33 @@
                 <!-- card kiri -->
                 <div class="col-lg-8 pl-lg-0">
                     <div class="card card-details">
-                        <h1>Kaos Wanita Lengan 3/4</h1>
+                        <h1>{{ $item->title }}</h1>
                         <hr>
+                        @if($item->galleries->count())
                         <div class="gallery">
                             <div class="xzoom-container">
-                                <img src="frontend/images/hitam.jpeg" class="xzoom" id="xzoom-default" xoriginal="frontend/images/hitam.jpeg">
+                                <img src="{{ Storage::url( $item->galleries->first()->image ) }}" 
+                                    class="xzoom" 
+                                    id="xzoom-default" 
+                                    xoriginal="{{ Storage::url( $item->galleries->first()->image ) }}">
                             </div>
                             <div class="xzoom-thumbs">
-                                <a href="frontend/images/hitam.jpeg">
-                                    <img src="frontend/images/hitam.jpeg" 
-                                        class="xzoom-gallery"
-                                        width="128"
-                                        xpreview="frontend/images/hitam.jpeg"
-                                    >
-                                </a>
-                                <a href="frontend/images/marun.jpeg">
-                                    <img src="frontend/images/marun.jpeg" 
-                                        class="xzoom-gallery"
-                                        width="128"
-                                        xpreview="frontend/images/marun.jpeg"
-                                    >
-                                </a>
-                                <a href="frontend/images/pink.jpg">
-                                    <img src="frontend/images/pink.jpg" 
-                                        class="xzoom-gallery"
-                                        width="128"
-                                        xpreview="frontend/images/pink.jpg"
-                                    >
-                                </a>
-                                <a href="frontend/images/biru.jpeg">
-                                    <img src="frontend/images/biru.jpeg" 
-                                        class="xzoom-gallery"
-                                        width="128"
-                                        xpreview="frontend/images/biru.jpeg"
-                                    >
-                                </a>
+                                @foreach ($item->galleries as $gallery)
+                                    <a href="{{ Storage::url($gallery->image) }}">
+                                        <img src="{{ Storage::url($gallery->image) }}" 
+                                            class="xzoom-gallery"
+                                            width="128"
+                                            xpreview="{{ Storage::url($gallery->image) }}"
+                                        >
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
+                        @endif
                         <h2>Detail Produk</h2>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, dolorum animi? Fugit incidunt velit quidem odit quae iste perferendis, vero optio at placeat, molestias error neque dolores quo sunt rem.</p>
+                        <p>
+                            {!! $item->about !!}
+                        </p>
                     </div>
                 </div>
 
@@ -72,54 +89,71 @@
                         
                         <div class=" btn-container">
                             <div class="container">
-                                <div class="row " style="align-items: center;">
-                                    <h6 class="mr-2">Size : </h6>
-                                    <div class="btn btn-size mr-1 active">
-                                        M
-                                    </div>
-                                    <div class="btn btn-size mr-1">
-                                        L
-                                    </div>
-                                    <div class="btn btn-size mr-1">
-                                        XL
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="container">
-                                <div class="row mt-2" style="align-items: center;">
-                                    <h6 class="mr-2">Warna : </h6>
-                                    <div class="btn btn-color btn-primary mr-1 active">
-                                        Hitam
-                                    </div>
-                                    <div class="btn btn-color btn-primary mr-1">
-                                        Putih
-                                    </div>
+                                <div class="container mt-2" style="padding-left: 5px">
+                                    <form action="{{ route('store_cart') }}" method="post" >
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user }}">
+                                        <input type="hidden" name="products_id" value="{{ $item->id }}">
+                                        <div class="row" style="align-items: center">
+                                            <h6 class="mr-2">Warna : </h6>
+                                            <div class="radio-button">
+                                                @foreach ($colors as $color)
+                                                    <input type="radio" id="{{$color->color_name}}" name="color_id" value="{{$color->id}}">
+                                                    <label for="{{$color->color_name}}">{{$color->color_name}}</label>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="align-items: center">
+                                            <h6 class="mr-2">Ukuran : </h6>
+                                            <div class="radio-button">
+                                                @foreach ($sizes as $size)
+                                                    <input type="radio" id="{{ $size->size_name }}" name="size_id" value="{{ $size->id }}">
+                                                    <label for="{{ $size->size_name }}">{{ $size->size_name }}</label>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-left: 0px; align-items:center;">
+                                            <label for="quantity">
+                                                <h6>Quantity : </h6>
+                                            </label>
+                                            <input class="ml-2" type="number" name="quantity" id="quantity" value="1" min="1" style="width: 50px" >
+                                        </div>
+
+                                        <div class="" style="margin-left: -15px; margin-right: -15px">
+                                            <hr>
+    
+                                            <table>
+                                                <tr>
+                                                    <th width="50%">
+                                                        Harga:  
+                                                    </th>
+                                                    
+                                                    <td id="resultText" width="50%" class="text-right">
+                                                        Rp. {{ $item->price }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+    
+                                            <hr>
+                                            
+                                            @auth
+                                                <button class="btn btn-block btn-keranjang" type="submit">
+                                                    +Keranjang
+                                                </button>
+                                            @endauth
+                                            @guest
+                                                <a href="{{ route('login') }}" class="btn btn-buynow" >
+                                                    Login / Register
+                                                </a>
+                                            @endguest
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="my-2"></div>
-                            <hr>
-                            <table>
-                                <tr>
-                                    <th width="50%">
-                                        Prize
-                                    </th>
-                                    <td width="50%" class="text-right">
-                                        Rp. 154000
-                                    </td>
-                                </tr>
-                            </table>
-                            <hr>
-                            <div class="row mt-2" >
-                                <div class="container">
-                                    <a href="{{ route('checkout') }}" class="btn btn-keranjang" >
-                                        + Keranjang
-                                    </a>
-                                    <a href="{{ route('checkout') }}" class="btn btn-buynow">
-                                        Beli Sekarang
-                                    </a>
-                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -141,7 +175,7 @@
                 zoomWidth: 500,
                 title: false,
                 tint:'#333',
-                XXoffset: 15
+                Xoffset: 15
             })
         })
     </script>

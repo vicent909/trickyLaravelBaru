@@ -17,17 +17,15 @@ class VariantController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(String $id)
+    public function index($id)
     {
         $pro = Product::with(['variants'])->findOrFail($id);
         $items = Variant::with(['product', 'size', 'color'])->where('products_id', $id)->get();
-        
 
         return view('pages.admin.variant.index', [
             'items' => $items,
             'pro' => $pro,
         ]);
-        
     }
 
     /**
@@ -38,8 +36,8 @@ class VariantController extends Controller
         $item = Product::with(['variants'])->findOrFail($id);
         $sizes = Size::all();
         $colors = Color::all();
-        
-        return view('pages.admin.variant.create',[
+
+        return view('pages.admin.variant.create', [
             'item' => $item,
             'sizes' => $sizes,
             'colors' => $colors,
@@ -54,10 +52,11 @@ class VariantController extends Controller
     public function store(VariantRequest $request)
     {
         $data = $request->all();
+        $id = $data['products_id'];
 
         Variant::create($data);
 
-        return redirect()->route('product.index');
+        return redirect()->route('variant2', $id);
     }
 
     /**
@@ -92,12 +91,13 @@ class VariantController extends Controller
     public function update(VariantRequest $request, string $id)
     {
         $data = $request->all();
+        $id_pro = $data['products_id'];
 
         $item = Variant::findOrFail($id);
 
         $item->update($data);
 
-        return redirect()->route('product.index');
+        return redirect()->route('variant2', $id_pro);
     }
 
     /**
@@ -106,8 +106,9 @@ class VariantController extends Controller
     public function destroy(string $id)
     {
         $item = Variant::findOrFail($id);
+        $id_pro = $item['products_id'];
         $item->delete();
 
-        return redirect()->route('product.index');
+        return redirect()->route('variant2', $id_pro);
     }
 }

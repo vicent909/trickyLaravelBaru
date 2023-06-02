@@ -13,7 +13,7 @@
             <br><hr color="white" style="width: 450px; ">
             With a Cool Tshirt
         </h1>
-        <a href="" class="btn btn-get-started px-4 mt-4">
+        <a href="#section-produk-beranda" class="btn btn-get-started px-4 mt-4">
             Get Started
         </a>
       </header>
@@ -26,42 +26,18 @@
                 <h1>MOST POPULAR</h1>
             </div>
             <div class="section-produk-item row justify-content-center">
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-produk text-center d-flex flex-column" style="background-image: url('frontend/images/Navy.png');">
-                        <div class="produk-button mt-auto">
-                            <a href="{{ url('/details') }}" class="btn btn-produk px-4" >
-                                Detail Produk
-                            </a>
+                @foreach ($items as $item)
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="card-produk text-center d-flex flex-column" style="background-image: url('{{ $item->galleries->count() ? Storage::url($item->galleries->first()->image) : '' }}');">
+                            <div class="produk-button mt-auto">
+                                
+                                <a href="{{ url('/details', $item->slug) }}" class="btn btn-produk px-4" >
+                                    Detail Produk
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-produk text-center d-flex flex-column" style="background-image: url('frontend/images/Navy-2.png');">
-                        <div class="produk-button mt-auto">
-                            <a href="{{ url('/details') }}" class="btn btn-produk px-4" >
-                                Detail Produk
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-produk text-center d-flex flex-column" style="background-image: url('frontend/images/marun.png');">
-                        <div class="produk-button mt-auto">
-                            <a href="{{ url('/details') }}" class="btn btn-produk px-4" >
-                                Detail Produk
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-produk text-center d-flex flex-column" style="background-image: url('frontend/images/pink.png');">
-                        <div class="produk-button mt-auto">
-                            <a href="{{ url('/details') }}" class="btn btn-produk px-4" >
-                                Detail Produk
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
       </section>

@@ -28,11 +28,17 @@ use PHPUnit\Framework\Attributes\Group;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/details', [DetailController::class, 'index'])
+Route::get('/details/{slug}', [DetailController::class, 'index'])
     ->name('details');
+
+Route::post('/checkout', [DetailController::class, 'store'])
+    ->name('store_cart');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])
     ->name('checkout');
+
+Route::get('/checkout/remove/{id}', [CheckoutController::class, 'remove'])
+    ->name('checkout-remove');
 
 Route::get('/checkout/success', [CheckoutController::class, 'success'])
     ->name('checkout-success');

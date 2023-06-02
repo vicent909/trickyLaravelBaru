@@ -41,7 +41,8 @@ class GalleryController extends Controller
     {
         $data = $request->all();
         $data['image'] = $request->file('image')->store(
-            'assets/gallery', 'public   '
+            'assets/gallery',
+            'public'
         );
 
         Gallery::create($data);
@@ -77,14 +78,15 @@ class GalleryController extends Controller
     {
         $data = $request->all();
         $data['image'] = $request->file('image')->store(
-            'assets/gallery', 'public'
-        ); 
+            'assets/gallery',
+            'public'
+        );
 
         $item = Gallery::findOrFail($id);
 
         $item->update($data);
 
-        return redirect()->route('gallery.index'); 
+        return redirect()->route('gallery.index');
     }
 
     /**
@@ -95,6 +97,6 @@ class GalleryController extends Controller
         $item = Gallery::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('gallery.index'); 
+        return redirect()->route('gallery.index');
     }
 }
