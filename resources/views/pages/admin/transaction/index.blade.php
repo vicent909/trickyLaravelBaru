@@ -16,20 +16,23 @@
                 <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>ID</th>
-                            <th>Produk</th>
+                            <th>Nama Customer</th>
                             <th>Total</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php $no = 1; ?>
                         @forelse ($items as $item)
                             <tr>
-                                <th>{{ $item ->id }}</th>
-                                <th>{{ $item ->product->title }}</th>
-                                <th>Rp. {{ $item ->transaction_total }}</th>
-                                <th>{{ $item ->transaction_status }}</th>
+                                <th>{{ $no++ }}</th>
+                                <th>{{ $item->id }}</th>
+                                <th>{{ $item->user->name }}</th>
+                                <th>Rp. {{ $item->transaction_total }}</th>
+                                <th>{{ $item->transaction_status }}</th>
                                 <td>
                                     <a href="{{ route('transaction.show', $item->id ) }}" class="btn btn-primary">
                                         <i class="fa fa-eye"></i>

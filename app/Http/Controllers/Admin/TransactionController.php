@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TransactionRequest;
 use App\Models\Transaction;
 use App\Models\Product;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -36,14 +37,14 @@ class TransactionController extends Controller
      */
     public function store(TransactionRequest $request)
     {
-        $data = $request->all();
-        $data['image'] = $request->file('image')->store(
-            'assets/transaction',
-            'public   '
-        );
+        // $data = $request->all();
+        // $data['image'] = $request->file('image')->store(
+        //     'assets/transaction',
+        //     'public   '
+        // );
 
-        Transaction::create($data);
-        return redirect()->route('transaction.index');
+        // Transaction::create($data);
+        // return redirect()->route('transaction.index');
     }
 
     /**
@@ -53,8 +54,13 @@ class TransactionController extends Controller
     {
         $item = Transaction::with(['details', 'product', 'user'])->findOrFail($id);
 
+        $details = TransactionDetail::with(['sizes', 'colors'])
+                    ->where('transaction_id', $item->id)
+                    ->get();
+
         return view('pages.admin.transaction.detail', [
-            'item' => $item
+            'item' => $item,
+            'details' => $details
         ]);
     }
 
@@ -78,7 +84,7 @@ class TransactionController extends Controller
     public function update(TransactionRequest $request, string $id)
     {
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title);
+        // $data['slug'] = Str::slug($request->title);
 
         $item = Transaction::findOrFail($id);
 

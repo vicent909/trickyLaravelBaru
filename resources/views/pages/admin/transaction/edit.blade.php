@@ -31,10 +31,9 @@
                         <option value="{{ $item->transaction_status }}">
                             Jangan Ubah ({{$item->transaction_status}})
                         </option>
-                        <option value="IN_CART">In Cart</option>
                         <option value="PENDING">Pending</option>
+                        <option value="SENT">Sent</option>
                         <option value="SUCCESS">Success</option>
-                        <option value="CANCEL">Cancel</option>
                         <option value="FAILED">Failed</option>
                     </select>
                 </div>

@@ -17,7 +17,7 @@
                                 <thead>
                                     <tr>
                                         <td>Picture</td>
-                                        <td>Nama Produk</td>
+                                        <td>Produk</td>
                                         <td>Ukuran</td>
                                         <td>Warna</td>
                                         <td>Qty</td>
@@ -114,7 +114,7 @@
 
                         <div class="row mt-2" >
                             <div class="container">
-                                <a href="{{ route('checkout-success') }}" class="btn btn-checkout" >
+                                <a href="{{ route('checkout-process') }}" class="btn btn-checkout" >
                                     Checkout
                                 </a>
                             </div>

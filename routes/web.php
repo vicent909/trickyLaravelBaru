@@ -40,6 +40,9 @@ Route::get('/checkout', [CheckoutController::class, 'index'])
 Route::get('/checkout/remove/{id}', [CheckoutController::class, 'remove'])
     ->name('checkout-remove');
 
+Route::get('/checkout/transaction', [CheckoutController::class, 'process'])
+    ->name('checkout-process');
+
 Route::get('/checkout/success', [CheckoutController::class, 'success'])
     ->name('checkout-success');
 
