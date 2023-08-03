@@ -3,7 +3,7 @@
 @section('content')
     
     <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -34,6 +34,14 @@
                             </option>
                         @endforeach
                     </select>
+                    {{-- <input list="products" class="form-control">
+                    <datalist id="products">
+                        @foreach ($products as $product)
+                            <option>
+                                {{ $product->title }}
+                            </option>
+                        @endforeach
+                    </datalist> --}}
                 </div>
                 <div class="form-group">
                     <label for="image" >Image</label>

@@ -3,11 +3,11 @@
 @section('content')
     
     <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Edit Product {{ $item->title }}</h1>
+        <h1 class="h3 mb-0 text-gray-800">Edit Transaction Tricky-{{$item->id}}</h1>
     </div>
 
     @if ($errors->any())
@@ -26,10 +26,10 @@
                 @method("PUT")
                 @csrf
                 <div class="form-group">
-                    <label for="transaction_status">Status</label>
-                    <select name="transaction_status" id="" required class="form-control">
-                        <option value="{{ $item->transaction_status }}">
-                            Jangan Ubah ({{$item->transaction_status}})
+                    <label for="handle_status">Status</label>
+                    <select name="handle_status" id="" required class="form-control">
+                        <option value="{{ $item->handle_status }}">
+                            Jangan Ubah ({{$item->handle_status}})
                         </option>
                         <option value="PENDING">Pending</option>
                         <option value="SENT">Sent</option>

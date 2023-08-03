@@ -82,13 +82,33 @@
                         </p>
                     </div>
                 </div>
-
                 <!-- card kanan -->
                 <div class="col-lg-4">
                     <div class="card card-details card-right ">
                         
                         <div class=" btn-container">
                             <div class="container">
+                                {{-- <form action="" method="GET">
+                                    <div class="row" style="align-items: center">
+                                        <h6 class="mr-2">Warna : </h6>
+                                        <div class="radio-button">
+                                            @foreach ($colors as $color)
+                                                <input type="radio" id="{{$color->color_name}}" name="color_id" value="{{$color->id}}">
+                                                <label for="{{$color->color_name}}">{{$color->color_name}}</label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="align-items: center">
+                                        <h6 class="mr-2">Ukuran : </h6>
+                                        <div class="radio-button">
+                                            @foreach ($sizes as $size)
+                                                <input type="radio" id="{{ $size->size_name }}" name="size_id" value="{{ $size->id }}">
+                                                <label for="{{ $size->size_name }}">{{ $size->size_name }}</label>
+                                            @endforeach
+                                        </div>
+                                    </div>  
+                                </form> --}}
                                 <div class="container mt-2" style="padding-left: 5px">
                                     <form action="{{ route('store_cart') }}" method="post" >
                                         @csrf
@@ -108,12 +128,11 @@
                                             <h6 class="mr-2">Ukuran : </h6>
                                             <div class="radio-button">
                                                 @foreach ($sizes as $size)
-                                                    <input type="radio" id="{{ $size->size_name }}" name="size_id" value="{{ $size->id }}">
+                                                    <input type="radio" id="{{ $size->size_name }}" name="size_id" value="{{ $size->id }}" onclick="">
                                                     <label for="{{ $size->size_name }}">{{ $size->size_name }}</label>
                                                 @endforeach
                                             </div>
                                         </div>
-
                                         <div class="row" style="padding-left: 0px; align-items:center;">
                                             <label for="quantity">
                                                 <h6>Quantity : </h6>
@@ -123,7 +142,7 @@
 
                                         <div class="" style="margin-left: -15px; margin-right: -15px">
                                             <hr>
-    
+                                            <p id="result">warna adalah</p>
                                             <table>
                                                 <tr>
                                                     <th width="50%">
@@ -161,6 +180,37 @@
         </div>
     </section>
   </main>
+
+  <script>
+        const radioBtns = document.querySelectorAll(['input[name="color_id"]', 'input[name="size_id"]']);
+        const result = document.getElementById('result');
+
+        let findSelected = () => {
+            let color = document.querySelector('input[name="color_id"]:checked').value;
+            let size = document.querySelector('input[name="size_id"]:checked').value;
+            let selectedColor = color ;
+            let selectedSize = size;
+            
+            result.textContent = `warna dan ukuran: ${[selectedColor, selectedSize]}`;
+        }
+
+        radioBtns.forEach(radioBtn => {
+            radioBtn.addEventListener("change", findSelected)
+        });
+
+        findSelected();
+
+        // function loadDoc(){
+        //     const xhttp = new XMLHttpRequest();
+        //     xhttp.onload = function() {
+        //         document.getElementByName("result").innerHTML =
+        //         this.responseText;
+        //     }
+        //     xhttp.open("GET", 'berhasil');
+        //     xhttp.send();
+        // }
+
+  </script>
 @endsection
 
 @push('prepend-style')
@@ -178,5 +228,20 @@
                 Xoffset: 15
             })
         })
+
+        // let radioBtns = document.querySelectorAll('input[name="color"]');
+        // let result = document.getElementById('result');
+
+        // let findSelected = () => {
+        //     let selected = document.querySelector("input[name='color']:checked");
+        //     console.log(selected);
+            // result.textContent = 'warna adalah ${selected}';
+        // }
+
+    //     radioBtns.forEach(radioBtn => {
+    //         radioBtn.addEventListener("change", findSelected)
+    //     });
+
+    //     findSelected();
     </script>
 @endpush

@@ -12,15 +12,34 @@
 
     <div class="row">
         <div class="card-body">
+            <form action="" method="GET">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Status Pesanan</label>
+                        <select name="status" class="form-control" id="" onchange="this.form.submit()">
+                            <option value="">Status</option>
+                            <option value="PENDING" {{Request::get('status') == 'PENDING' ? 'selected' : ''}}>PENDING</option>
+                            <option value="ON PROCESS" {{Request::get('status') == 'ON PROCESS' ? 'selected' : ''}}>ON PROCESS</option>
+                            <option value="SUCCESS" {{Request::get('status') == 'SUCCESS' ? 'selected' : ''}}>SUCCESS</option>
+                            <option value="FAILED" {{Request::get('status') == 'FAILED' ? 'selected' : ''}}>FAILED</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-0 mt-auto">
+                        <button class="btn btn-primary" type="submit" >Filter</button>
+                    </div>
+                </div>
+            </form>
+            <hr>
             <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table class="table table-bordered " width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No.</th>
                             <th>ID</th>
                             <th>Nama Customer</th>
                             <th>Total</th>
-                            <th>Status</th>
+                            <th>Payment Status</th>
+                            <th>Status Pesanan</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -28,11 +47,12 @@
                         <?php $no = 1; ?>
                         @forelse ($items as $item)
                             <tr>
-                                <th>{{ $no++ }}</th>
+                                <th width="5%" >{{ $no++ }}</th>
                                 <th>{{ $item->id }}</th>
                                 <th>{{ $item->user->name }}</th>
                                 <th>Rp. {{ $item->transaction_total }}</th>
                                 <th>{{ $item->transaction_status }}</th>
+                                <th>{{ $item->handle_status }}</th>
                                 <td>
                                     <a href="{{ route('transaction.show', $item->id ) }}" class="btn btn-primary">
                                         <i class="fa fa-eye"></i>
@@ -50,12 +70,14 @@
                                 </td>
                             </tr>
                         @empty
-                            <td colspan="5" class="text-center">
+                            <td colspan="7" class="text-center">
                                 Data Kosong
                             </td>
                         @endforelse
                     </tbody>
                 </table>
+
+                {{ $items->links() }}
             </div>
         </div>
     </div>

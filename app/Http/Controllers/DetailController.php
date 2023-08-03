@@ -16,15 +16,20 @@ class DetailController extends Controller
 {
     public function index(Request $request, $slug)
     {
-        $user = Auth::user()->id;
+        $user = Auth::user() ? Auth::user()->id : '';
 
         $item = Product::with(['galleries'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $variants = Variant::with(['product', 'size', 'color'])
-            ->where('products_id', $item->id)
-            ->get();
+        $variants = Variant::where('products_id', $item->id)
+                            ->when($request->color_id != null && $request->size_id != null, function($q) use ($request){
+                                return $q->where('colors_id', $request->color_id); 
+                            })
+                            ->when($request->size_id != null, function($q) use ($request){
+                                return $q->where('sizes_id', $request->size_id); 
+                            })
+                            ->get();
 
         $sizes = Size::all();
 
@@ -33,15 +38,17 @@ class DetailController extends Controller
         return view('pages.details', [
             'user' => $user,
             'item' => $item,
-            'variants' => $variants,
             'sizes' => $sizes,
-            'colors' => $colors
+            'colors' => $colors,
+            'variants' => $variants
         ]);
     }
 
     public function store(CartRequest $request)
     {
         $data = $request->all();
+
+        $ukuran = $request->color_id;
 
         $id = $data['user_id'];
 

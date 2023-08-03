@@ -15,18 +15,18 @@
             <div class="collapse navbar-collapse" id="navb">
                 <ul class="navbar-nav ml-auto mr-3">
                     <li class="nav-item mx-md-2 ">
-                        <a href="{{ route('home') }}" class="nav-link active">
+                        <a href="{{ route('home') }}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
                             Home
                         </a>
                     </li>
                     <li class="nav-item mx-md-2">
-                        <a href="#" class="nav-link">
-                            Produk
+                        <a href="{{ route('checkout') }}" class="nav-link {{ Request::is('checkout') ? 'active' : '' }}">
+                            Keranjang
                         </a>
                     </li>
                     <li class="nav-item mx-md-2">
-                        <a href="{{ route('checkout') }}" class="nav-link">
-                            Keranjang
+                        <a href="{{route('history')}}" class="nav-link {{ Request::is('history') ? 'active' : '' }}">
+                            Riwayat
                         </a>
                     </li>
                     <li class="nav-item mx-md-2">

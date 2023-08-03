@@ -14,7 +14,7 @@ class TransactionDetail extends Model
         'transaction_id', 'product_title', 'size', 'color', 'quantity', 'price', 'price_end'
     ];
 
-    protected $hidden = [];
+    protected $hidden = []; 
 
     public function transaction(){
         return $this->belongsTo(Transaction::class, 'transaction_id', 'id');

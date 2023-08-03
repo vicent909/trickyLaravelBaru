@@ -15,9 +15,14 @@ class TransactionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = Transaction::with(['details', 'product', 'user'])->get();
+        $items = Transaction::with(['details', 'product', 'user'])
+                ->when($request->status != null, function($q) use ($request){
+                    return $q->where('handle_status', $request->status); 
+                })
+                ->latest()
+                ->paginate(20);
 
         return view('pages.admin.transaction.index', [
             'items' => $items
@@ -35,16 +40,9 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TransactionRequest $request)
+    public function store(Request $request)
     {
-        // $data = $request->all();
-        // $data['image'] = $request->file('image')->store(
-        //     'assets/transaction',
-        //     'public   '
-        // );
-
-        // Transaction::create($data);
-        // return redirect()->route('transaction.index');
+        return('berhasil');
     }
 
     /**
