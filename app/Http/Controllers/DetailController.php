@@ -56,4 +56,18 @@ class DetailController extends Controller
 
         return redirect()->route('checkout');
     }
+
+    public function api($slug){
+        $user = Auth::user() ? Auth::user()->id : '';
+
+        $item = Product::with(['galleries'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $sizes = Size::all();
+
+        $colors = Color::all();
+
+        return response()->json(['data' => ['user' => $user,'product' => $item, 'sizes' => $sizes, 'colors' => $colors]]);
+    }
 }

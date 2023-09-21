@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Models\Variant;
 use Illuminate\Http\Request;
@@ -46,9 +47,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $items = Product::all();
+
+        // return response()->json(['data' => $items]);
+
+        return ProductResource::collection($items);
     }
 
     /**
